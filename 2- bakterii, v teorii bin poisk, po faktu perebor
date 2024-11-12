@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+    
+    long n, m, summa = 0, index = 0, summat = 0, minusmat = 0;
+    cin >> n >> m;
+    vector<long> a(n);
+    vector<long> t(n);
+    vector<long> sum(n);
+    vector<long> proces(n, 0);
+    vector<long> procesmin(n, 0);
+    for (long i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    for (long i = 0; i < n; i++)
+    {
+        cin >> t[i];
+    }
+    for (long i = 0; i < n; i++)
+    {
+        sum[i] = a[i] + t[i];
+    }
+    sort(sum.begin(), sum.end());
+    while (summa + summat < m)
+    {
+        index += 1;
+        for (long i = 0; i < n; i++)
+        {
+            if (sum[i] - index <= 0)
+            {
+                summa += pow(2, abs(sum[i] - index));
+                minusmat += 1;
+                procesmin[i] = 1;
+            }
+
+        }
+        for (long i = 0; i < n; i++)
+        {
+            if (a[i] - index + 1 <= 0 && sum[i] - index > 0)
+            {
+                summat += 1;
+            }
+
+        }
+        if (summa + summat < m)
+        {
+            summa = 0;
+            summat = 0;
+        }
+    }
+    if (summa + summat == m)
+        cout << index - 1;
+    if (summa + summat > m)
+        cout << -1;
+}
